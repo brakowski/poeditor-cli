@@ -1,5 +1,5 @@
 {
-  "name": "poeditor",
+  "name": "poeditor-cli",
   "version": "1.0.0",
   "description": "Command line tool for managing translation terms for POEditor.com",
   "main": "poeditor.js",
@@ -17,5 +17,6 @@
   },
   "bin": {
     "poeditor": "./poeditor.js"
-  }
+  },
+  "repository": "https://github.com/brakowski/poeditor-cli.git"
 }
