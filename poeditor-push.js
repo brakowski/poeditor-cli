@@ -2,6 +2,7 @@ var program  		= require('commander'),
 	CLI		 		= require('clui'),
 	configure		= require('./configure'),
 	api				= require('./api'),
+	clc				= require('cli-color'),
 	POEditorStaging = require('./staging');
 
 program.version("1.0.0")

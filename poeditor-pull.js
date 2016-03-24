@@ -1,6 +1,7 @@
 var fs			= require('fs'),
 	program  	= require('commander'),
 	CLI		 	= require('clui'),
+	clc			= require('cli-color'),
 	configure	= require('./configure'),
 	api			= require('./api');
 
@@ -26,7 +27,6 @@ configure(program).then(function(config){
 
 	var tasks = config.projectLanguages.map(function(code){
 		return function(){
-			console.log(code);
 			var languages = localesMap[code];
 
 			spinner.message('Please wait, retrieving translations for ' + code + '.');
