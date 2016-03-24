@@ -2,7 +2,7 @@
   "name": "poeditor",
   "version": "1.0.0",
   "description": "Command line tool for managing translation terms for POEditor.com",
-  "main": "index.js",
+  "main": "poeditor.js",
   "author": "Alexander Brakowski",
   "license": "MIT",
   "dependencies": {
@@ -14,5 +14,8 @@
     "configstore": "^1.4.0",
     "inquirer": "^0.12.0",
     "promise": "^7.1.1"
+  },
+  "bin": {
+    "poeditor": "./poeditor.js"
   }
 }
