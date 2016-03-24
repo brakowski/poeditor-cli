@@ -1,0 +1,18 @@
+{
+  "name": "poeditor",
+  "version": "1.0.0",
+  "description": "Command line tool for managing translation terms for POEditor.com",
+  "main": "index.js",
+  "author": "Alexander Brakowski",
+  "license": "MIT",
+  "dependencies": {
+    "atomic-write": "^0.1.1",
+    "cli-color": "^1.1.0",
+    "cli-table": "^0.3.1",
+    "clui": "^0.3.1",
+    "commander": "^2.9.0",
+    "configstore": "^1.4.0",
+    "inquirer": "^0.12.0",
+    "promise": "^7.1.1"
+  }
+}
