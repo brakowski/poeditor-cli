@@ -5,7 +5,7 @@ var fs			= require('fs'),
 	configure	= require('./configure'),
 	api			= require('./api');
 
-program.version("1.0.0")
+program.version("1.0.1")
 	   .description("Download translations from POEditor into the target directory");
 
 configure(program).then(function(config){
@@ -52,7 +52,10 @@ configure(program).then(function(config){
 						}
 
 						tags.forEach(function(file){
-							if(!files.hasOwnProperty(file)) return true;
+							if(!files.hasOwnProperty(file)){
+								files[file] = {};
+							}
+							
 							if(!files[file].hasOwnProperty(lang)){
 								files[file][lang] = {};
 							}

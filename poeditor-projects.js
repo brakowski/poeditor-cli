@@ -5,9 +5,10 @@ var fs			= require('fs'),
 	configure	= require('./configure'),
 	utils 		= require('./utils'),
 	api			= require('./api'),
+	Table		= require('cli-table'),
 	POEditorStaging = require('./staging');
 
-program.version("1.0.0")
+program.version("1.0.1")
 	.description("Displays the available projects for the given API-Token");
 
 configure(program).then(function(config) {
