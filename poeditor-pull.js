@@ -3,7 +3,8 @@ var fs			= require('fs'),
 	CLI		 	= require('clui'),
 	clc			= require('cli-color'),
 	configure	= require('./configure'),
-	api			= require('./api');
+	api			= require('./api'),
+	exporters   = require('./exporters');
 
 program.version("1.0.1")
 	   .description("Download translations from POEditor into the target directory");
@@ -47,7 +48,7 @@ configure(program).then(function(config){
 							tags = [];
 						}
 
-						if(item.context){
+						if(item.context && !item.context.match(/\s/ig)){
 							tags.push(item.context);
 						}
 
@@ -93,24 +94,19 @@ configure(program).then(function(config){
 		}
 
 		try {
-			Object.keys(files).forEach(function (f) {
-				Object.keys(files[f]).forEach(function (l) {
-					// construct the file name
-					var fileName = config.targetDir + f;
-					if (l !== '') {
-						fileName += '_' + l;
-					}
-					fileName += '.properties';
-
-					var out = fs.createWriteStream(fileName);
-					Object.keys(files[f][l]).forEach(function (k) {
-						out.write(k + '=' + files[f][l][k] + '\r\n');
-					});
-					out.end();
+			if(config.exportType.match(/[^\.]*\.js/ig)){
+				var customExporter = require(process.cwd() + '/' + config.exportType);
+				customExporter(config, files, function(){
+					spinner.stop();
 				});
-			});
-
-			spinner.stop();
+			} else if (exporters[config.exportType]){
+				exporters[config.exportType](config, files, function(){
+					spinner.stop();
+				});
+			} else {
+				spinner.stop();
+				console.log(clc.red('[ERROR] The given exporter could not be located.'));
+			}
 		} catch (ex) {
 			console.log(ex);
 			spinner.stop();

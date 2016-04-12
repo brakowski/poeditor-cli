@@ -14,6 +14,8 @@ module.exports = function(program){
 		.option('-p, --project <project_id>', 'The project ID to use for POEditor translation management')
 		.option('-a, --apitoken <api_token>', 'The API-Token to use for POEdtior translation management')
 		.option('-t, --target <target_dir>', 'The target directory the translations should be saved to')
+		.option('-e, --exporttype <export_type>', 'The filetype the pulled files should be saved as. Currently "json" and "properties" are supported. Default is "properties".')
+		.option('-s, --single <target_filename>', 'Set this option to export into one single file given and not into multiple')
 		.option('-l, --languages <languages>', 'The languages that should be pulled', function(val){
 			return val.split(',');
 		});
@@ -26,6 +28,8 @@ module.exports = function(program){
 	cfg.projectId = program.project || config.projectId;
 	cfg.projectLanguages = program.languages || config.projectLanguages;
 	cfg.defaultLanguage = config.defaultLanguage || 'en-us';
+	cfg.exportType = program.exporttype || config.exportType || 'properties';
+	cfg.exportSingleFileTarget = program.single || config.exportSingleFileTarget;
 
 	return new Promise(function(resolve, reject) {
 		if (!cfg.apiToken || !cfg.projectId) {
