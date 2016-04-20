@@ -6,7 +6,7 @@ var program  		= require('commander'),
 	POEditorStaging = require('./staging');
 
 program.version("1.0.0")
-	.description("Upload newly added/staged translations to POEditor");
+	.description("Add new translation term with a key and the default translation");
 
 configure(program).then(function(config){
 	var poeditorStaging = new POEditorStaging();
