@@ -19,9 +19,9 @@ configure(program).then(function(config) {
 		if (stagingData.hasOwnProperty(term)) {
 			var entry = stagingData[term];
 			table.push([
+				entry.context,
 				entry.term,
 				entry.defaultTranslation,
-				entry.context,				
 				entry.tags.join(', ')
 			]);
 		}
