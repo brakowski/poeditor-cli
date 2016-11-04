@@ -20,8 +20,8 @@ configure(program).then(function(config){
 			var entry = stagingData[term];
 			termData.push({
 				term: entry.term,
-				tags: entry.tags,
 				context: entry.context,
+				tags: entry.tags,
 				reference: '',
 				plural: '',
 				comment: ''
