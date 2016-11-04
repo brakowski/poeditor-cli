@@ -11,8 +11,8 @@ configure(program).then(function(config) {
 	var stagingData = poeditorStaging.getStagingData();
 
 	var table = new Table({
-		head: ['term', 'defaultTranslation', 'context', 'tags'],
-		colWidths: [20, 40, 20, 20]
+		head: ['context', 'term', 'defaultTranslation', 'tags'],
+		colWidths: [20, 20, 40, 20]
 	});
 
 	Object.keys(stagingData).forEach(term => {
