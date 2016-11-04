@@ -8,19 +8,23 @@ program.version("1.0.0")
 
 configure(program).then(function(config) {
 	var poeditorStaging = new POEditorStaging(config.defaultLanguage);
-	var data = poeditorStaging.getStagingData();
+	var stagingData = poeditorStaging.getStagingData();
 
 	var table = new Table({
-		head: ['key', 'destination', 'translation'],
-		colWidths: [30, 20, 50]
+		head: ['term', 'defaultTranslation', 'context', 'tags'],
+		colWidths: [20, 40, 20, 20]
 	});
 
-	Object.keys(data).forEach(function(tag){
-		Object.keys(data[tag]).forEach(function(lang){
-			Object.keys(data[tag][lang]).forEach(function(key){
-				table.push([key, tag, data[tag][lang][key]]);
-			});
-		});
+	Object.keys(stagingData).forEach(term => {
+		if (stagingData.hasOwnProperty(term)) {
+			var entry = stagingData[term];
+			table.push([
+				entry.term,
+				entry.defaultTranslation,
+				entry.context,				
+				entry.tags.join(', ')
+			]);
+		}
 	});
 
 	console.log("\n The following data is currently in the staging area:");

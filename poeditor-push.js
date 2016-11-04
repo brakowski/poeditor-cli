@@ -11,45 +11,39 @@ program.version("1.0.0")
 configure(program).then(function(config){
 	var poeditorStaging = new POEditorStaging();
 	var stagingData = poeditorStaging.getStagingData();
-	var data = [];
+	
+	var termData = [];
 	var langData = [];
 
-	Object.keys(stagingData).forEach(function(tag){
-		Object.keys(stagingData[tag]).forEach(function(lang){
-			Object.keys(stagingData[tag][lang]).forEach(function(key){
-				var value = stagingData[tag][lang][key];
-
-				data.push({
-					term: key,
-					tags: tag,
-					context: tag,
-					reference: "",
-					plural: "",
-					comment: ""
-				});
-
-				langData.push({
-					term: {
-						term: key,
-						context: tag
-					},
-
-					definition: {
-						forms: [
-							value
-						],
-						fuzzy: 0
-					}
-				});
+	Object.keys(stagingData).forEach(term => {
+		if (stagingData.hasOwnProperty(term)) {
+			var entry = stagingData[term];
+			termData.push({
+				term: entry.term,
+				tags: entry.tags,
+				context: entry.context,
+				reference: '',
+				plural: '',
+				comment: ''
 			});
-		});
+			langData.push({
+				term: {
+					term: entry.term,
+					context: entry.context
+				},
+				definition: {
+					forms: [entry.defaultTranslation],
+					fuzzy: 0
+				}
+			});
+		}
 	});
 
-	var spinner = new CLI.Spinner('Please wait, pushing ' + data.length + ' terms to POEditor.');
+	var spinner = new CLI.Spinner('Please wait, pushing ' + termData.length + ' terms to POEditor.');
 	spinner.start();
 
 	api.apiRequest(config.apiToken, 'add_terms', {
-		data: JSON.stringify(data),
+		data: JSON.stringify(termData),
 		id: config.projectId
 	}).then(function(res) {
 		api.apiRequest(config.apiToken, 'update_language', {
