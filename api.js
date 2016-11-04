@@ -5,8 +5,10 @@ var util   		= require('util'),
 	querystring = require('querystring'),
 	extend 		= util._extend;
 
-function apiRequest(apiToken, action, params){
-	return new Promise(function(resolve, reject){
+var API_TIMEOUT = 2000; // 2 seconds
+
+function apiRequest(apiToken, action, params) {
+	return new Promise(function (resolve, reject) {
 		var parameters = {
 			api_token: apiToken,
 			action: action
@@ -21,6 +23,7 @@ function apiRequest(apiToken, action, params){
 			path: '/api/',
 			port: 443,
 			method: 'POST',
+			timeout: API_TIMEOUT,
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
 				'Content-Length': postData.length
@@ -38,13 +41,17 @@ function apiRequest(apiToken, action, params){
 				if(success){
 					resolve([parsed.response, parsed.item || parsed.list || parsed.details || null]);
 				} else {
-					reject(parsed);
+					reject({
+						code: parsed.response.code,
+						message: parsed.response.message
+					});
 				}
 			});
 
-			res.on('error', function(){
-				reject(arguments);
-			});
+		});
+
+		req.on('error', function (e) {
+			reject(e);
 		});
 
 		req.write(postData);

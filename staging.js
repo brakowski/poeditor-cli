@@ -31,18 +31,31 @@ extend(POEditorStaging.prototype, {
 		this.writeStagingCache();
 	},
 
-	addTerm: function(tag, key, translation){
-		if(!this.stagingData.hasOwnProperty(tag)){
-			this.stagingData[tag] = {};
+	addTerm: function(term, defaultTranslation, context, tags, update){
+
+		if (!term) {
+			throw {
+				code: 1,
+				message: 'Term is required'
+			};
 		}
 
-		if(!this.stagingData[tag].hasOwnProperty(this.defaultLanguage)){
-			this.stagingData[tag][this.defaultLanguage] = {};
+		if (!update && this.stagingData[term]) {
+			throw {
+				code: 2,
+				message: 'Term already exists'
+			};
 		}
 
-		this.stagingData[tag][this.defaultLanguage][key] = translation;
+		this.stagingData[term] = {
+			term: term,
+			context: context || '',
+			defaultTranslation: defaultTranslation,
+			tags: tags || []
+		};
 
 		this.writeStagingCache();
+
 	},
 
 	getStagingData: function(){
