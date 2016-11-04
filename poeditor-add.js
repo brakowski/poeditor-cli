@@ -11,6 +11,18 @@ configure(program).then(function(config) {
 		key			= program.args[1],
 		translation = program.args[2];
 
+	if (!destination) {
+		return console.log(clc.red('[ERROR] destination is required'));
+	}
+
+	if (!key) {
+		return console.log(clc.red('[ERROR] key is required'));
+	}
+
+	if (!translation) {
+		return console.log(clc.red('[ERROR] translation is required'));
+	}
+
 	var poeditorStaging = new POEditorStaging(config.defaultLanguage);
 	poeditorStaging.addTerm(destination, key, translation);
 
