@@ -42,6 +42,7 @@ configure(program).then(function (config) {
 				id: config.projectId,
 				language: code
 			}).then(function (res) {
+
 				var response = res[0],
 					list = res[1];
 
@@ -81,6 +82,9 @@ configure(program).then(function (config) {
 				spinner.stop();
 				console.log("( " + clc.green("OK") + " ) Retrieved translations for " + code + ".");
 				nextTask();
+			}).catch(function (error) {
+				spinner.stop();
+				console.log(clc.red("[ERROR] Could not pull translations: " + error.message || "no details available"));
 			});
 		}
 	});
