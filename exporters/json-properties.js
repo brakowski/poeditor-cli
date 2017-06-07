@@ -2,9 +2,21 @@ var fs = require('fs');
 
 function convertListToMap(list) {
     var termToTranslationMap = {};
+
     list.forEach(function (t) {
-        termToTranslationMap[t.term] = t.definition.form;
+        var form = t.definition.form;
+        var term = t.term;
+        var context = t.context.replace(/^"(.*)"$/, '$1');
+
+        if (context && !termToTranslationMap[context]) {
+            termToTranslationMap[context] = {};
+        }
+
+        context
+            ? termToTranslationMap[context][term] = form
+            : termToTranslationMap[term] = form;
     });
+
     return termToTranslationMap;
 }
 
